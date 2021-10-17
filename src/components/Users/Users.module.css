@@ -1,0 +1,40 @@
+.picture {
+    width: 80px;
+    margin: 10px;
+}
+
+.margForBtn {
+    margin-left: 10px;
+}
+
+.marg {
+    margin: 10px;
+    color: white;
+}
+
+/*.pagesBlock {*/
+/*    margin-top: 10px;*/
+/*    margin-bottom: 10px;*/
+/*}*/
+
+/*.pages {*/
+/*    margin: 7px;*/
+/*    color: white;*/
+/*    word-wrap: break-word;*/
+/*}*/
+
+/*.selectedPage {*/
+/*    margin: 7px;*/
+/*    color: yellow;*/
+/*    font-weight: bold;*/
+/*    word-wrap: break-word;*/
+/*}*/
+
+.flexContainer{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.isFetching {
+    text-align: center;
+}
