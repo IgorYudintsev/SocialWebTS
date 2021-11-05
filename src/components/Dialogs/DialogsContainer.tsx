@@ -8,7 +8,7 @@ import {initialStateType} from "../../redux/auth-reducer";
 import {AppStateType} from "../../redux/redux-store";
 import {Redirect} from "react-router";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
-type DialogsContainerType={
+export type DialogsContainerType={
     state:istate
     auth:initialStateType
 }

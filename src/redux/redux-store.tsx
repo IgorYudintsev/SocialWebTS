@@ -23,6 +23,7 @@ const store = createStore(reducers,  composeEnhancers(
        applyMiddleware(thunkMiddleware)
 ));
 
+
 export type AppStateType = ReturnType<typeof reducers>
 // let store: Store = createStore(reducers,applyMiddleware(thunkMiddleware));
 //@ts-ignore
