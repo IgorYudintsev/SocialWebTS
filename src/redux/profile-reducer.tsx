@@ -6,7 +6,11 @@ import {
     updateNewPostTextActionType
 } from "./store";
 import {profileAPI, usersAPI} from "../api/api";
-type contactsType = {
+import {AppStateType} from "./redux-store";
+import {stopSubmit} from "redux-form";
+import {Dispatch} from "redux";
+
+export type contactsType = {
     facebook: string
     website: string
     vk: string
@@ -28,8 +32,10 @@ export type profileType = {
     fullName: string
     userId: number
     photos: photosType
-    isAuth: boolean
+    isAuth?: boolean
 }
+
+
 export type statusUpdateType = {
     resultCode: number
     messages: Array<string>,
@@ -93,26 +99,38 @@ const profileReducer = (state: iprofilePage = initialState, action: ActionsTypes
     }
 }
 
-//ACType
+// наша санка
+export let saveProfile = (profile: profileType) => async (dispatch: any, getState: () => AppStateType) => {
+    const userID=getState().auth.id
+    let response = await profileAPI.saveProfile(profile)
+    if (response.data.resultCode === 0 && userID) {
+        dispatch(getUserProfile(userID))
+    }else{
+        //подсветить ошибку
+        //нужно чтобы вписал общее, а не конкретное
+        let message = response.data.messages.length > 0 ? response.data.messages[0] : "Some Error";
+        dispatch(stopSubmit('edit-profile', {_error: response.data.messages[0]}));
+    }
+}
+
 export type savePhotoSuccessType = {
     type: 'SET_PHOTO_SUCCESS',
     photos: string
 }
-//AC
+
 export let savePhotoSuccess = (photos: string) => {
     return {
         type: 'SET_PHOTO_SUCCESS',
         photos
     }
 }
-//Thunk
+
 export let savePhoto = (file: string) => async (dispatch: any) => {
     let response = await profileAPI.savePhoto(file)
     if (response.data.resultCode === 0) {
         dispatch(savePhotoSuccess(response.data.data.photos))
     }
 }
-
 
 export let addPostActionCreator = (newPostText: string): AddPostActionType => {
     return {
@@ -132,7 +150,7 @@ export let setStatus = (status: string): setStatusAC => {
         status
     }
 }
-export const getUserProfile = (userId: any) => async (dispatch: any) => {
+export const getUserProfile = (userId: number) => async (dispatch: Dispatch) => {
     let response = await usersAPI.getProfile(userId)
     dispatch(setUserProfile(response.data));
 }

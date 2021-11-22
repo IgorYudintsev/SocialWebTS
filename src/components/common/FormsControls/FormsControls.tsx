@@ -3,7 +3,6 @@ import styles from './FormsControls.module.css'
 import {Field} from "redux-form";
 import {required} from "../../../utilites/validators/validators";
 
-//дестриктурируем пропсы
 const FormControl=({input, meta:{touched,error}, children}: any)=>{
     const hasError = touched && error
     return (
@@ -30,8 +29,7 @@ export const Input = (props: any) => {
     // <FormControl><передаем child ></FormControl>
 }
 
-
-
+// мы используем наш кастомный способ
 export const CreateField=(placeholder:any,name:any,component:any,validate:any,props={},text='')=>{
     return(
         <div>

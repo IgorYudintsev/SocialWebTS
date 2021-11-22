@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {
     getStatus,
     getUserProfile,
-    profileType, savePhoto,
+    profileType, savePhoto, saveProfile,
     updateStatus
 } from "../../redux/profile-reducer";
 import {AppStateType} from "../../redux/redux-store";
@@ -27,8 +27,8 @@ export type MapDispatchPropsType = {
     getStatus: (userId: any) => void
     updateStatus: (status: string) => void
     savePhoto: (file: File) => void,
+    saveProfile:(formData:any)=>void
 }
-
 
 class ProfileContainer extends React.Component<RouteComponentPropsType> {
     refereshProfile() {
@@ -45,13 +45,11 @@ class ProfileContainer extends React.Component<RouteComponentPropsType> {
         this.props.getUserProfile(userId);
         this.props.getStatus(userId);
     }
-
     componentDidMount() {
         //принцип: монтируется первый раз
         //просто вывзываем
         this.refereshProfile()
     }
-
     componentDidUpdate() {
         //принцип: перерисовывается когда приходят свежие пропсы
         //вывзываем если поменялся userId
@@ -59,13 +57,13 @@ class ProfileContainer extends React.Component<RouteComponentPropsType> {
             this.refereshProfile()
         }
     }
-
     render() {
         return (
             <div>
                 <Profile {...this.props}
                          isOwner={!this.props.match.params.userId}
                          savePhoto={this.props.savePhoto}
+                         saveProfile={this.props.saveProfile}
                          profile={this.props.profile}
                          status={this.props.status}
                          updateStatus={this.props.updateStatus}
@@ -74,7 +72,6 @@ class ProfileContainer extends React.Component<RouteComponentPropsType> {
         )
     }
 }
-
 let mapStateToProps = (state: AppStateType) => ({
     profile: state.profilePage.profile,
     status: state.profilePage.status,
@@ -83,9 +80,8 @@ let mapStateToProps = (state: AppStateType) => ({
 })
 
 export default compose<React.ComponentType>(
-    connect(mapStateToProps,                                    //Это ThunkCreator
-        {getUserProfile, getStatus, updateStatus, savePhoto}),
-    withRouter)(ProfileContainer)
+    connect(mapStateToProps,                                           //Это ThunkCreator
+        {getUserProfile, getStatus, updateStatus, savePhoto,saveProfile}), withRouter)(ProfileContainer)
 
 
 

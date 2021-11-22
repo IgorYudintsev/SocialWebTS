@@ -43,7 +43,11 @@ export const profileAPI = {
             }
         );
     },
+    saveProfile(profile: any) {
+        return instance.put(`/profile`,profile.formData);
+    }
 }
+
 export const authAPI = {
     me() {
         return instance.get(`auth/me`)

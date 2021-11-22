@@ -15,20 +15,14 @@ type FormDataType = {
     rememberMe: boolean,
 }
 
-//поля заменяем на функцию
+//Здесь мы ничего не добавляли, используем старый функционал
 const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, error}) => {
     return (
         <form onSubmit={handleSubmit} className={styles.marginLeft}>
 
             {CreateField('Email', 'email', Input, [required], {type: 'text'})}
-            {/*<Field placeholder={'Email'} name={'email'} component={Input}  validate={[required]}/>*/}
-
             {CreateField('Password', 'password', Input, [required], {type: 'password'})}
-            {/*<Field placeholder={'Password'} name={'password'} component={Input} type={"password"} validate={[required]}/>*/}
-
             {CreateField(null, 'rememberMe', Input, [], {type: 'checkbox'}, 'remember me')}
-            {/*<span>remember me</span>*/}
-            {/*<Field placeholder={'Password'} name={'password'} component={Input} type={"password"} validate={[required]}/>*/}
 
             {error && <div className={styles.formSummaryError}>{error}</div>}
             <div>
